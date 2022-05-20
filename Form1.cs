@@ -1,18 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Reactive.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using TwinCAT.Ads;
-
-
-
+using TwinCAT.TypeSystem;
 
 
 namespace Beckhoff_VS_Visualisation
@@ -20,8 +10,11 @@ namespace Beckhoff_VS_Visualisation
     public partial class Form1 : Form
     {
         //AmsPort ADS_Port = 851;
-        AmsNetId AMS_NetID;
+        //AmsNetId AMS_NetID;
         DateTime dt;
+        /*LIST OF PLC VARIABLE USED IN PROJECT*/
+        IValueSymbol prgAlarms_test;
+        IValueSymbol bResetCnts;
 
         public Form1()
         {
@@ -32,10 +25,16 @@ namespace Beckhoff_VS_Visualisation
         private void Form1_Load(object sender, EventArgs e)
         {
             CheckConnectionWithLocalPLC();
-        }
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-      
+
+            try
+            {
+                prgAlarms_test  = GetAdsVariable("prgAlarms.test");
+                bResetCnts = GetAdsVariable(".bResetCnts");
+            }
+            catch(Exception error2)
+            {
+
+            }
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -43,25 +42,29 @@ namespace Beckhoff_VS_Visualisation
             dt = DateTime.Now;
             try
             {
-                textBox1.Text = ((Int32)ads.ReadAny(ads.CreateVariableHandle("prgAlarms.HMI_Alarms_Counter"), typeof(Int32))).ToString();
+                textBox1.Text = GetAdsVariableValueString<Int32>("prgAlarms.HMI_Alarms_Counter");
                 label2.Text = dt.ToString();
-                label4.Text = ((int)ads.ReadAny(ads.CreateVariableHandle(".stDeviceCtrl.iBPM"), typeof(int))).ToString();
+                label4.Text = GetAdsVariableValueString<int>(".stDeviceCtrl.iBPM"); 
 
-                label10.Text = ((UInt32)ads.ReadAny(ads.CreateVariableHandle(".udiTriggersCnt_1"), typeof(UInt32))).ToString();
-                label11.Text = ((UInt32)ads.ReadAny(ads.CreateVariableHandle(".udiRejectsCnt1"), typeof(UInt32))).ToString();
-                label12.Text = ((Single)ads.ReadAny(ads.CreateVariableHandle(".rEff1"), typeof(Single))).ToString();
+                label10.Text = GetAdsVariableValueString<UInt32>(".udiTriggersCnt_1"); 
+                label11.Text = GetAdsVariableValueString<UInt32>(".udiRejectsCnt1"); 
+                label12.Text = GetAdsVariableValueString<Single>(".rEff1"); 
                 
-                label15.Text = ((UInt32)ads.ReadAny(ads.CreateVariableHandle(".udiTriggersCnt_2"), typeof(UInt32))).ToString();
-                label14.Text = ((UInt32)ads.ReadAny(ads.CreateVariableHandle(".udiRejectsCnt2"), typeof(UInt32))).ToString();
-                label13.Text = ((Single)ads.ReadAny(ads.CreateVariableHandle(".rEff2"), typeof(Single))).ToString();
+                label15.Text = GetAdsVariableValueString<UInt32>(".udiTriggersCnt_2"); 
+                label14.Text = GetAdsVariableValueString<UInt32>(".udiRejectsCnt2"); 
+                label13.Text = GetAdsVariableValueString<Single>(".rEff2"); 
 
-                label22.Text = ((UInt32)ads.ReadAny(ads.CreateVariableHandle(".udiTriggersCnt_3"), typeof(UInt32))).ToString();
-                label21.Text = ((UInt32)ads.ReadAny(ads.CreateVariableHandle(".udiRejectsCnt3"), typeof(UInt32))).ToString();
-                label20.Text = ((Single)ads.ReadAny(ads.CreateVariableHandle(".rEff3"), typeof(Single))).ToString();
+                label22.Text = GetAdsVariableValueString<UInt32>(".udiTriggersCnt_3"); 
+                label21.Text = GetAdsVariableValueString<UInt32>(".udiRejectsCnt3"); 
+                label20.Text = GetAdsVariableValueString<Single>(".rEff3"); 
 
-                label29.Text = ((UInt32)ads.ReadAny(ads.CreateVariableHandle(".udiTriggersCnt_4"), typeof(UInt32))).ToString();
-                label28.Text = ((UInt32)ads.ReadAny(ads.CreateVariableHandle(".udiRejectsCnt4"), typeof(UInt32))).ToString();
-                label27.Text = ((Single)ads.ReadAny(ads.CreateVariableHandle(".rEff4"), typeof(Single))).ToString();
+                label29.Text = GetAdsVariableValueString<UInt32>(".udiTriggersCnt_4"); 
+                label28.Text = GetAdsVariableValueString<UInt32>(".udiRejectsCnt4"); 
+                label27.Text = GetAdsVariableValueString<Single>(".rEff4");
+
+                label36.Text = GetAdsVariableValueString<UInt32>(".udiInfeedCnt");
+                label35.Text = GetAdsVariableValueString<UInt32>(".udiRejectsCnt");
+                label34.Text = GetAdsVariableValueString<Single>(".rEff7");
             }
             catch (Exception error1)
             {
@@ -88,13 +91,10 @@ namespace Beckhoff_VS_Visualisation
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            bool testVarRead;
-            ads.WriteAny(ads.CreateVariableHandle("prgAlarms.test"), true);
+            prgAlarms_test.WriteValue(true);
 
-            testVarRead = (bool)ads.ReadAny(ads.CreateVariableHandle("prgAlarms.test"), typeof(bool));
-            if (testVarRead)
+            if ((bool)prgAlarms_test.ReadValue())
             {
-
                 button1.BackColor = Color.Green;
                 button2.BackColor = Color.Red;
             }
@@ -102,11 +102,9 @@ namespace Beckhoff_VS_Visualisation
 
         private void button2_Click(object sender, EventArgs e)
         {
-            bool testVarRead;
-            ads.WriteAny(ads.CreateVariableHandle("prgAlarms.test"), false);
-            
-            testVarRead = (bool)ads.ReadAny(ads.CreateVariableHandle("prgAlarms.test"), typeof(bool));
-            if (!testVarRead)
+            prgAlarms_test.WriteValue(false);
+
+            if (!(bool)prgAlarms_test.ReadValue())
             {
                 button2.BackColor = Color.Green;
                 button1.BackColor = Color.Red;
@@ -136,12 +134,25 @@ namespace Beckhoff_VS_Visualisation
                 MessageBox.Show(error.Message.ToString());
             }
         }
+
+        string GetAdsVariableValueString<T>(string name)
+        {
+           return ((T)ads.ReadAny(ads.CreateVariableHandle(name), typeof(T))).ToString();
+        }
+
+        IValueSymbol GetAdsVariable(string name)
+        {
+            var symbolLoader = TwinCAT.Ads.TypeSystem.SymbolLoaderFactory.Create(ads, TwinCAT.SymbolLoaderSettings.Default);
+            IValueSymbol Symbol = (IValueSymbol)symbolLoader.Symbols[name];
+            return Symbol;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            button3.Text = "Reset\n" + dt.ToString();
+            bResetCnts.WriteValue(true);
+        }
     }
 }
 
-//Different Type of Reading Connecting to Variable in PLC
-//var symbolLoader1 = TwinCAT.Ads.TypeSystem.SymbolLoaderFactory.Create(ads, TwinCAT.SymbolLoaderSettings.Default);
-//TwinCAT.TypeSystem.IValueSymbol gvlRealSymbol = (TwinCAT.TypeSystem.IValueSymbol)symbolLoader1.Symbols["Global_Variables.rEff1"];
-//j++;
-//// Take 10 Values (0..9) and write them to GVL.i
-//gvlRealSymbol.WriteValue(j);
+
