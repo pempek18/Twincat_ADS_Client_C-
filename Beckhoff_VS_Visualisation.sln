@@ -5,6 +5,11 @@ VisualStudioVersion = 16.0.31911.196
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beckhoff_VS_Visualisation", "Beckhoff_VS_Visualisation.csproj", "{6EFE4EE9-F213-4DAE-AB33-5CACFAFE3CC3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D89AABCE-3ABA-4786-8E23-454C74882749}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\Desktop\GRAHAM\Assevaint\[TC3] Vision System Candia\Images\VS_1.png = ..\..\..\Desktop\GRAHAM\Assevaint\[TC3] Vision System Candia\Images\VS_1.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

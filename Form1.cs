@@ -21,19 +21,13 @@ namespace Beckhoff_VS_Visualisation
     {
         //AmsPort ADS_Port = 851;
         AmsNetId AMS_NetID;
-        int i=0;
-        Single j = 0;
+        DateTime dt;
 
         public Form1()
         {
             InitializeComponent();
         }
         private AdsClient ads = new AdsClient();
-        public struct ST_DeviceCtrl
-        {
-            public int iBPM { get; }
-        }
-
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -46,22 +40,28 @@ namespace Beckhoff_VS_Visualisation
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            CheckConnectionWithLocalPLC();
-            DateTime dt;
             dt = DateTime.Now;
             try
             {
                 textBox1.Text = ((Int32)ads.ReadAny(ads.CreateVariableHandle("prgAlarms.HMI_Alarms_Counter"), typeof(Int32))).ToString();
                 label2.Text = dt.ToString();
-                // Create Symbol information (Symbol 'i : INT' in PLC Global Variables list.
-                var symbolLoader = TwinCAT.Ads.TypeSystem.SymbolLoaderFactory.Create(ads, TwinCAT.SymbolLoaderSettings.Default);
-                TwinCAT.TypeSystem.IValueSymbol gvlIntSymbol = (TwinCAT.TypeSystem.IValueSymbol)symbolLoader.Symbols["GVL.i"];
-                i++;
-                // Take 10 Values (0..9) and write them to GVL.i
-                gvlIntSymbol.WriteValue(i);
-
-                label5.Text = ((Single)ads.ReadAny(ads.CreateVariableHandle(".rEff1"), typeof(Single))).ToString();
                 label4.Text = ((int)ads.ReadAny(ads.CreateVariableHandle(".stDeviceCtrl.iBPM"), typeof(int))).ToString();
+
+                label10.Text = ((UInt32)ads.ReadAny(ads.CreateVariableHandle(".udiTriggersCnt_1"), typeof(UInt32))).ToString();
+                label11.Text = ((UInt32)ads.ReadAny(ads.CreateVariableHandle(".udiRejectsCnt1"), typeof(UInt32))).ToString();
+                label12.Text = ((Single)ads.ReadAny(ads.CreateVariableHandle(".rEff1"), typeof(Single))).ToString();
+                
+                label15.Text = ((UInt32)ads.ReadAny(ads.CreateVariableHandle(".udiTriggersCnt_2"), typeof(UInt32))).ToString();
+                label14.Text = ((UInt32)ads.ReadAny(ads.CreateVariableHandle(".udiRejectsCnt2"), typeof(UInt32))).ToString();
+                label13.Text = ((Single)ads.ReadAny(ads.CreateVariableHandle(".rEff2"), typeof(Single))).ToString();
+
+                label22.Text = ((UInt32)ads.ReadAny(ads.CreateVariableHandle(".udiTriggersCnt_3"), typeof(UInt32))).ToString();
+                label21.Text = ((UInt32)ads.ReadAny(ads.CreateVariableHandle(".udiRejectsCnt3"), typeof(UInt32))).ToString();
+                label20.Text = ((Single)ads.ReadAny(ads.CreateVariableHandle(".rEff3"), typeof(Single))).ToString();
+
+                label29.Text = ((UInt32)ads.ReadAny(ads.CreateVariableHandle(".udiTriggersCnt_4"), typeof(UInt32))).ToString();
+                label28.Text = ((UInt32)ads.ReadAny(ads.CreateVariableHandle(".udiRejectsCnt4"), typeof(UInt32))).ToString();
+                label27.Text = ((Single)ads.ReadAny(ads.CreateVariableHandle(".rEff4"), typeof(Single))).ToString();
             }
             catch (Exception error1)
             {
