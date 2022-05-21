@@ -62,9 +62,9 @@ namespace Beckhoff_VS_Visualisation
                 label28.Text = GetAdsVariableValueString<UInt32>(".udiRejectsCnt4"); 
                 label27.Text = GetAdsVariableValueString<Single>(".rEff4");
 
-                label36.Text = GetAdsVariableValueString<UInt32>(".udiInfeedCnt");
-                label35.Text = GetAdsVariableValueString<UInt32>(".udiRejectsCnt");
-                label34.Text = GetAdsVariableValueString<Single>(".rEff7");
+                statisticViewier1.Label_4 = GetAdsVariableValueString<UInt32>(".udiInfeedCnt");
+                statisticViewier1.Label_5 = GetAdsVariableValueString<UInt32>(".udiRejectsCnt");
+                statisticViewier1.Label_6 = GetAdsVariableValueString<Single>(".rEff7");
             }
             catch (Exception error1)
             {
