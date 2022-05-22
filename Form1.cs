@@ -36,7 +36,23 @@ namespace Beckhoff_VS_Visualisation
             }
             catch(Exception error2)
             {
+                string message = "Application can not read PLC Variables \nYes to Close App \nNo to try again\nMessage Below :\n" + error2;
+                string caption = "Error Detected in Input";
+                MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+                DialogResult result;
 
+                // Displays the MessageBox.
+                result = MessageBox.Show(message, caption, buttons);
+                if (result == System.Windows.Forms.DialogResult.Yes)
+                {
+                    // Closes the parent form.
+                    this.Close();
+                }
+                if (result == System.Windows.Forms.DialogResult.No)
+                {
+                    // Closes the parent form.
+                    timer1.Enabled = true;
+                }
             }
 
             eventView1.View = View.Details;
@@ -122,8 +138,24 @@ namespace Beckhoff_VS_Visualisation
                 button1.BackColor = Color.Red;
             }
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            button3.Text = "Reset\n" + dt.ToString();
+            bResetCnts.WriteValue(true);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
         /********************FUNCTIONS*************************************/
-        void CheckConnectionWithLocalPLC()
+        public void CheckConnectionWithLocalPLC()
         {
             try
             {
@@ -147,34 +179,17 @@ namespace Beckhoff_VS_Visualisation
             }
         }
 
-        string GetAdsVariableValueString<T>(string name)
+        public string GetAdsVariableValueString<T>(string name)
         {
-           return ((T)ads.ReadAny(ads.CreateVariableHandle(name), typeof(T))).ToString();
+            return ((T)ads.ReadAny(ads.CreateVariableHandle(name), typeof(T))).ToString();
         }
 
-        IValueSymbol GetAdsVariable(string name)
+        public IValueSymbol GetAdsVariable(string name)
         {
             var symbolLoader = TwinCAT.Ads.TypeSystem.SymbolLoaderFactory.Create(ads, TwinCAT.SymbolLoaderSettings.Default);
             IValueSymbol Symbol = (IValueSymbol)symbolLoader.Symbols[name];
             return Symbol;
         }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            button3.Text = "Reset\n" + dt.ToString();
-            bResetCnts.WriteValue(true);
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void AddEvent(TcEvent evt)
         {
             ListViewItem lvi = new ListViewItem();
