@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using TwinCAT.Ads;
 using TwinCAT.TypeSystem;
+using TCEVENTLOGGERLib;
 
 
 namespace Beckhoff_VS_Visualisation
@@ -15,13 +16,14 @@ namespace Beckhoff_VS_Visualisation
         /*LIST OF PLC VARIABLE USED IN PROJECT*/
         IValueSymbol prgAlarms_test;
         IValueSymbol bResetCnts;
-
+        IValueSymbol AlarmsCtrl_bAckAllBtn;
         public Form1()
         {
             InitializeComponent();
         }
         private AdsClient ads = new AdsClient();
-
+        TcEventLog tcEventLogger = new TcEventLog();
+        int langId = 1033;
         private void Form1_Load(object sender, EventArgs e)
         {
             CheckConnectionWithLocalPLC();
@@ -30,11 +32,21 @@ namespace Beckhoff_VS_Visualisation
             {
                 prgAlarms_test  = GetAdsVariable("prgAlarms.test");
                 bResetCnts = GetAdsVariable(".bResetCnts");
+                AlarmsCtrl_bAckAllBtn = GetAdsVariable("AlarmsCtrl.bAckAllBtn");
             }
             catch(Exception error2)
             {
 
             }
+
+            eventView1.View = View.Details;
+            eventView1.Columns.Add("Time", "Time");
+            eventView1.Columns.Add("Type", "Type");
+            eventView1.Columns.Add("Source", "Source");
+            eventView1.Columns.Add("Message", "Message");
+
+            foreach (TcEvent evt in tcEventLogger.EnumLoggedEventsEx())
+                AddEvent(evt);
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -46,21 +58,21 @@ namespace Beckhoff_VS_Visualisation
                 label2.Text = dt.ToString();
                 label4.Text = GetAdsVariableValueString<int>(".stDeviceCtrl.iBPM"); 
 
-                label10.Text = GetAdsVariableValueString<UInt32>(".udiTriggersCnt_1"); 
-                label11.Text = GetAdsVariableValueString<UInt32>(".udiRejectsCnt1"); 
-                label12.Text = GetAdsVariableValueString<Single>(".rEff1"); 
-                
-                label15.Text = GetAdsVariableValueString<UInt32>(".udiTriggersCnt_2"); 
-                label14.Text = GetAdsVariableValueString<UInt32>(".udiRejectsCnt2"); 
-                label13.Text = GetAdsVariableValueString<Single>(".rEff2"); 
+                statisticViewier2.Label_4 = GetAdsVariableValueString<UInt32>(".udiTriggersCnt_1");
+                statisticViewier2.Label_5 = GetAdsVariableValueString<UInt32>(".udiRejectsCnt1");
+                statisticViewier2.Label_6 = GetAdsVariableValueString<Single>(".rEff1");
 
-                label22.Text = GetAdsVariableValueString<UInt32>(".udiTriggersCnt_3"); 
-                label21.Text = GetAdsVariableValueString<UInt32>(".udiRejectsCnt3"); 
-                label20.Text = GetAdsVariableValueString<Single>(".rEff3"); 
+                statisticViewier3.Label_4 = GetAdsVariableValueString<UInt32>(".udiTriggersCnt_2");
+                statisticViewier3.Label_5 = GetAdsVariableValueString<UInt32>(".udiRejectsCnt2");
+                statisticViewier3.Label_6 = GetAdsVariableValueString<Single>(".rEff2");
 
-                label29.Text = GetAdsVariableValueString<UInt32>(".udiTriggersCnt_4"); 
-                label28.Text = GetAdsVariableValueString<UInt32>(".udiRejectsCnt4"); 
-                label27.Text = GetAdsVariableValueString<Single>(".rEff4");
+                statisticViewier4.Label_4 = GetAdsVariableValueString<UInt32>(".udiTriggersCnt_3");
+                statisticViewier4.Label_5 = GetAdsVariableValueString<UInt32>(".udiRejectsCnt3");
+                statisticViewier4.Label_6 = GetAdsVariableValueString<Single>(".rEff3");
+
+                statisticViewier5.Label_4 = GetAdsVariableValueString<UInt32>(".udiTriggersCnt_4");
+                statisticViewier5.Label_5 = GetAdsVariableValueString<UInt32>(".udiRejectsCnt4");
+                statisticViewier5.Label_6 = GetAdsVariableValueString<Single>(".rEff4");
 
                 statisticViewier1.Label_4 = GetAdsVariableValueString<UInt32>(".udiInfeedCnt");
                 statisticViewier1.Label_5 = GetAdsVariableValueString<UInt32>(".udiRejectsCnt");
@@ -151,6 +163,93 @@ namespace Beckhoff_VS_Visualisation
         {
             button3.Text = "Reset\n" + dt.ToString();
             bResetCnts.WriteValue(true);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void AddEvent(TcEvent evt)
+        {
+            ListViewItem lvi = new ListViewItem();
+            lvi.Name = "Time";
+            try
+            { lvi.Text = Convert.ToString(evt.Date); }
+            catch (Exception)
+            { lvi.Text = ""; }
+            eventView1.Items.Insert(0, lvi);
+            PrepareListViewItem(lvi);
+
+            try
+            { AddListViewSubItem(lvi, "Type", GetEventClassName(evt)); }
+            catch (Exception)
+            { }
+            try
+            { AddListViewSubItem(lvi, "Source", evt.get_SourceName(langId)); }
+            catch (Exception)
+            { }
+
+            try
+            { AddListViewSubItem(lvi, "Message", evt.GetMsgString(langId)); }
+            catch (Exception)
+            { }
+        }
+        /// <summary>
+        /// Prepare the listview item by padding its subitems with empty items
+        /// </summary>
+        /// <param name="lvi"> ListViewItem to be prepared</param>
+        private void PrepareListViewItem(ListViewItem lvi)
+        {
+            for (int i = 0; i < eventView1.Columns.Count; i++)
+                lvi.SubItems.Add("???"); // pad items with question marks.
+        }
+        /// <summary>
+        /// Add one sub item at an indexed position to the ListViewItem
+        /// </summary>
+        /// <param name="lvi"> Parent item. The item must have been inserted to a ListView control</param>
+        /// <param name="name"> Item name (index) of the item. A coulumn with such index must exist in the ListView control</param>
+        /// <param name="text"> Display text </param>
+        private void AddListViewSubItem(ListViewItem lvi, string name, string text)
+        {
+            ListViewItem.ListViewSubItem lvsi = new ListViewItem.ListViewSubItem();
+            lvsi.Name = name;
+            lvsi.Text = text;
+            lvi.SubItems.Insert(lvi.ListView.Columns.IndexOfKey(lvsi.Name), lvsi);
+        }
+        /// <summary>
+        /// Get a textual representation for the event class.
+        /// </summary>
+        /// <param name="evt">Event object</param>
+        /// <returns>Classname</returns>
+        private string GetEventClassName(TcEvent evt)
+        {
+            switch ((TcEventClass)evt.Class)
+            {
+                case TcEventClass.TCEVENTCLASS_ALARM:
+                    return "Alarm";
+                case TcEventClass.TCEVENTCLASS_HINT:
+                    return "Hint";
+                case TcEventClass.TCEVENTCLASS_INSTRUCTION:
+                    return "Instruction";
+                case TcEventClass.TCEVENTCLASS_MAINTENANCE:
+                    return "Maintenance";
+                case TcEventClass.TCEVENTCLASS_MESSAGE:
+                    return "Message";
+                case TcEventClass.TCEVENTCLASS_PARAMERROR:
+                    return "Paramerror";
+                case TcEventClass.TCEVENTCLASS_STATEINFO:
+                    return "State info";
+                case TcEventClass.TCEVENTCLASS_WARNING:
+                    return "Warning";
+                default:
+                    return "?";
+            }
         }
     }
 }

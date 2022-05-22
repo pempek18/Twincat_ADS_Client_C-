@@ -51,10 +51,9 @@ namespace Beckhoff_VS_Visualisation
         protected override void OnPaint(PaintEventArgs pe)
         {
             base.OnPaint(pe);
-            
 
             text[0] = this.Text;
-            Point p = new Point(((this.Width / 2) - 50), (this.Height / 20) - 1);
+            Point p = new Point(((this.Width / 2) - text[0].Length * 7), (this.Height / 20) - 1);
             pe.Graphics.FillRectangle(new SolidBrush(color), ClientRectangle);
             pe.Graphics.DrawString(text[0], this.Font, new SolidBrush(this.ForeColor), p);
 
@@ -70,15 +69,15 @@ namespace Beckhoff_VS_Visualisation
             p.Y = ((this.Height / 10) + 90);
             pe.Graphics.DrawString(text[3], this.Font, new SolidBrush(this.ForeColor), p);
 
-            p.X = ((this.Width / 2) + 10);
+            p.X = ((this.Width / 2) + 50);
             p.Y = ((this.Height / 10) + 30);
             pe.Graphics.DrawString(text[4], this.Font, new SolidBrush(this.ForeColor), p);
 
-            p.X = ((this.Width / 2) + 10);
+            p.X = ((this.Width / 2) + 50);
             p.Y = ((this.Height / 10) + 60);
             pe.Graphics.DrawString(text[5], this.Font, new SolidBrush(this.ForeColor), p);
 
-            p.X = ((this.Width / 2) + 10);
+            p.X = ((this.Width / 2) + 50);
             p.Y = ((this.Height / 10) + 90);
             pe.Graphics.DrawString(text[6], this.Font, new SolidBrush(this.ForeColor), p);
 
