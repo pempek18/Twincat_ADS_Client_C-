@@ -8,7 +8,7 @@ using TCEVENTLOGGERLib;
 
 namespace Beckhoff_VS_Visualisation
 {
-    public partial class Form1 : Form
+    public partial class main : Form
     {
         //AmsPort ADS_Port = 851;
         //AmsNetId AMS_NetID;
@@ -17,17 +17,16 @@ namespace Beckhoff_VS_Visualisation
         IValueSymbol prgAlarms_test;
         IValueSymbol bResetCnts;
         IValueSymbol AlarmsCtrl_bAckAllBtn;
-        public Form1()
+        public main()
         {
             InitializeComponent();
+            CheckConnectionWithLocalPLC();
         }
         private AdsClient ads = new AdsClient();
         TcEventLog tcEventLogger = new TcEventLog();
         int langId = 1033;
         private void Form1_Load(object sender, EventArgs e)
         {
-            CheckConnectionWithLocalPLC();
-
             try
             {
                 prgAlarms_test  = GetAdsVariable("prgAlarms.test");
@@ -155,30 +154,20 @@ namespace Beckhoff_VS_Visualisation
 
         }
         /********************FUNCTIONS*************************************/
-        public void CheckConnectionWithLocalPLC()
+        public bool CheckConnectionWithLocalPLC()
         {
             try
             {
-                // Connect to local TwinCAT System Service
-                //ads.Connect(ADS_Port);
                 ads.Connect(AmsNetId.Local, 851);
-                if (ads.IsConnected == true)
-                {
-                    label1.Text = ("Connection with PLC OK");
-                    label1.BackColor = Color.Green;
-                }
-                else
-                {
-                    label1.Text = ("Connection with PLC is missing");
-                    label1.BackColor = Color.Red;
-                }
+                return (ads.IsConnected);
             }
             catch (Exception error)
             {
+                timer1.Enabled = false;
+                return (ads.IsConnected);
                 MessageBox.Show(error.Message.ToString());
             }
         }
-
         public string GetAdsVariableValueString<T>(string name)
         {
             return ((T)ads.ReadAny(ads.CreateVariableHandle(name), typeof(T))).ToString();
@@ -265,6 +254,11 @@ namespace Beckhoff_VS_Visualisation
                 default:
                     return "?";
             }
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

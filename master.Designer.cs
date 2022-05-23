@@ -33,66 +33,89 @@ namespace Beckhoff_VS_Visualisation
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.mainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rejectsTriggerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.statusStrip = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.blowersSetupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.conveyorSetupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pLCCONNECTIONSTATUSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.menuStrip.SuspendLayout();
-            this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip
             // 
             this.menuStrip.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.menuStrip.Font = new System.Drawing.Font("Segoe UI", 16F);
+            this.menuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mainToolStripMenuItem,
-            this.rejectsTriggerToolStripMenuItem});
+            this.rejectsTriggerToolStripMenuItem,
+            this.blowersSetupToolStripMenuItem,
+            this.conveyorSetupToolStripMenuItem,
+            this.dataToolStripMenuItem,
+            this.pLCCONNECTIONSTATUSToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(1392, 38);
+            this.menuStrip.Size = new System.Drawing.Size(1856, 45);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "MenuStrip";
             // 
             // mainToolStripMenuItem
             // 
             this.mainToolStripMenuItem.Name = "mainToolStripMenuItem";
-            this.mainToolStripMenuItem.Size = new System.Drawing.Size(160, 34);
+            this.mainToolStripMenuItem.Size = new System.Drawing.Size(91, 41);
             this.mainToolStripMenuItem.Text = "Main";
             this.mainToolStripMenuItem.Click += new System.EventHandler(this.mainToolStripMenuItem_Click);
             // 
             // rejectsTriggerToolStripMenuItem
             // 
             this.rejectsTriggerToolStripMenuItem.Name = "rejectsTriggerToolStripMenuItem";
-            this.rejectsTriggerToolStripMenuItem.Size = new System.Drawing.Size(160, 34);
+            this.rejectsTriggerToolStripMenuItem.Size = new System.Drawing.Size(203, 41);
             this.rejectsTriggerToolStripMenuItem.Text = "Rejects Trigger";
             this.rejectsTriggerToolStripMenuItem.Click += new System.EventHandler(this.rejectsTriggerToolStripMenuItem_Click);
             // 
-            // statusStrip
+            // blowersSetupToolStripMenuItem
             // 
-            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 609);
-            this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(1392, 22);
-            this.statusStrip.TabIndex = 2;
-            this.statusStrip.Text = "StatusStrip";
+            this.blowersSetupToolStripMenuItem.Name = "blowersSetupToolStripMenuItem";
+            this.blowersSetupToolStripMenuItem.Size = new System.Drawing.Size(198, 41);
+            this.blowersSetupToolStripMenuItem.Text = "Blowers Setup";
             // 
-            // toolStripStatusLabel
+            // conveyorSetupToolStripMenuItem
             // 
-            this.toolStripStatusLabel.Name = "toolStripStatusLabel";
-            this.toolStripStatusLabel.Size = new System.Drawing.Size(39, 17);
-            this.toolStripStatusLabel.Text = "Status";
+            this.conveyorSetupToolStripMenuItem.Name = "conveyorSetupToolStripMenuItem";
+            this.conveyorSetupToolStripMenuItem.Size = new System.Drawing.Size(219, 41);
+            this.conveyorSetupToolStripMenuItem.Text = "Conveyor Setup";
+            // 
+            // dataToolStripMenuItem
+            // 
+            this.dataToolStripMenuItem.Enabled = false;
+            this.dataToolStripMenuItem.Name = "dataToolStripMenuItem";
+            this.dataToolStripMenuItem.Size = new System.Drawing.Size(87, 41);
+            this.dataToolStripMenuItem.Text = "Data";
+            // 
+            // pLCCONNECTIONSTATUSToolStripMenuItem
+            // 
+            this.pLCCONNECTIONSTATUSToolStripMenuItem.Enabled = false;
+            this.pLCCONNECTIONSTATUSToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.pLCCONNECTIONSTATUSToolStripMenuItem.Name = "pLCCONNECTIONSTATUSToolStripMenuItem";
+            this.pLCCONNECTIONSTATUSToolStripMenuItem.Size = new System.Drawing.Size(345, 41);
+            this.pLCCONNECTIONSTATUSToolStripMenuItem.Text = "PLC CONNECTION STATUS";
+            // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // master
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1392, 631);
+            this.ClientSize = new System.Drawing.Size(1856, 777);
             this.ControlBox = false;
-            this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip);
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip;
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "master";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
@@ -100,8 +123,6 @@ namespace Beckhoff_VS_Visualisation
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
-            this.statusStrip.ResumeLayout(false);
-            this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -110,11 +131,13 @@ namespace Beckhoff_VS_Visualisation
 
 
         private System.Windows.Forms.MenuStrip menuStrip;
-        private System.Windows.Forms.StatusStrip statusStrip;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
-        private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.ToolStripMenuItem mainToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem rejectsTriggerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem blowersSetupToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem conveyorSetupToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem dataToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pLCCONNECTIONSTATUSToolStripMenuItem;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

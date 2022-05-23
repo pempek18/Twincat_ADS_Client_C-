@@ -29,10 +29,12 @@ namespace Beckhoff_VS_Visualisation
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.userControl14 = new Beckhoff_VS_Visualisation.UserControl1();
             this.userControl13 = new Beckhoff_VS_Visualisation.UserControl1();
             this.userControl12 = new Beckhoff_VS_Visualisation.UserControl1();
             this.userControl11 = new Beckhoff_VS_Visualisation.UserControl1();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // userControl14
@@ -83,6 +85,12 @@ namespace Beckhoff_VS_Visualisation
             this.userControl11.Textbox_2 = "";
             this.userControl11.Textbox_3 = "";
             // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // TriggersReject
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -109,5 +117,6 @@ namespace Beckhoff_VS_Visualisation
         private UserControl1 userControl12;
         private UserControl1 userControl13;
         private UserControl1 userControl14;
+        private System.Windows.Forms.Timer timer1;
     }
 }
