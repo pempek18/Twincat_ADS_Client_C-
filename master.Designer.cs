@@ -38,6 +38,7 @@ namespace Beckhoff_VS_Visualisation
             this.dataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pLCCONNECTIONSTATUSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.errorsCounterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -52,7 +53,8 @@ namespace Beckhoff_VS_Visualisation
             this.blowersSetupToolStripMenuItem,
             this.conveyorSetupToolStripMenuItem,
             this.dataToolStripMenuItem,
-            this.pLCCONNECTIONSTATUSToolStripMenuItem});
+            this.pLCCONNECTIONSTATUSToolStripMenuItem,
+            this.errorsCounterToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(1856, 45);
@@ -106,6 +108,13 @@ namespace Beckhoff_VS_Visualisation
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // errorsCounterToolStripMenuItem
+            // 
+            this.errorsCounterToolStripMenuItem.Enabled = false;
+            this.errorsCounterToolStripMenuItem.Name = "errorsCounterToolStripMenuItem";
+            this.errorsCounterToolStripMenuItem.Size = new System.Drawing.Size(196, 41);
+            this.errorsCounterToolStripMenuItem.Text = "errors counter";
+            // 
             // master
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -138,6 +147,7 @@ namespace Beckhoff_VS_Visualisation
         private System.Windows.Forms.ToolStripMenuItem dataToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pLCCONNECTIONSTATUSToolStripMenuItem;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.ToolStripMenuItem errorsCounterToolStripMenuItem;
     }
 }
 

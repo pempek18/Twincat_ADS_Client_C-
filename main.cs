@@ -17,6 +17,7 @@ namespace Beckhoff_VS_Visualisation
         IValueSymbol prgAlarms_test;
         IValueSymbol bResetCnts;
         IValueSymbol AlarmsCtrl_bAckAllBtn;
+        int errorCnt = 0;
         public main()
         {
             InitializeComponent();
@@ -24,6 +25,7 @@ namespace Beckhoff_VS_Visualisation
         }
         private AdsClient ads = new AdsClient();
         TcEventLog tcEventLogger = new TcEventLog();
+        
         int langId = 1033;
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -35,23 +37,9 @@ namespace Beckhoff_VS_Visualisation
             }
             catch(Exception error2)
             {
-                string message = "Application can not read PLC Variables \nYes to Close App \nNo to try again\nMessage Below :\n" + error2;
-                string caption = "Error Detected in Input";
-                MessageBoxButtons buttons = MessageBoxButtons.YesNo;
-                DialogResult result;
-
-                // Displays the MessageBox.
-                result = MessageBox.Show(message, caption, buttons);
-                if (result == System.Windows.Forms.DialogResult.Yes)
-                {
-                    // Closes the parent form.
-                    this.Close();
-                }
-                if (result == System.Windows.Forms.DialogResult.No)
-                {
-                    // Closes the parent form.
-                    timer1.Enabled = true;
-                }
+                master myMaster = new master();
+                errorCnt++;
+               myMaster.ErrorsCounterDisplay = errorCnt.ToString();
             }
 
             eventView1.View = View.Details;
@@ -95,25 +83,7 @@ namespace Beckhoff_VS_Visualisation
             }
             catch (Exception error1)
             {
-                timer1.Enabled = false;
-                // Initializes the variables to pass to the MessageBox.Show method.
-                string message = "Application can not read PLC Variables \nYes to Close App \nNo to try again\nMessage Below :\n" + error1;
-                string caption = "Error Detected in Input";
-                MessageBoxButtons buttons = MessageBoxButtons.YesNo;
-                DialogResult result;
-
-                // Displays the MessageBox.
-                result = MessageBox.Show(message, caption, buttons);
-                if (result == System.Windows.Forms.DialogResult.Yes)
-                {
-                    // Closes the parent form.
-                    this.Close();
-                }
-                if (result == System.Windows.Forms.DialogResult.No)
-                {
-                    // Closes the parent form.
-                    timer1.Enabled = true;
-                }
+                errorCnt++;
             }
         }
         private void button1_Click(object sender, EventArgs e)

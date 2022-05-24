@@ -14,8 +14,15 @@ namespace Beckhoff_VS_Visualisation
             form1.MdiParent = this;
             form1.Show();
         }
+
         DateTime dt = DateTime.Now;
         private AdsClient ads = new AdsClient();
+
+        public string ErrorsCounterDisplay
+         {
+            get{ return errorsCounterToolStripMenuItem.Text; }
+            set{ errorsCounterToolStripMenuItem.Text = value; Invalidate(); }
+         }
         public void master_OnLoad(object sender, EventArgs e)
         {
             

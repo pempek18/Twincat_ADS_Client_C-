@@ -14,6 +14,7 @@ namespace Beckhoff_VS_Visualisation
             CheckConnectionWithLocalPLC();
         }
         private AdsClient ads = new AdsClient();
+        int errorCnt=0;
         private struct ST_Trigger_Params
         {
             public IValueSymbol iTriggerDly, iBlowerPos, iBlowLenght;
@@ -32,6 +33,7 @@ namespace Beckhoff_VS_Visualisation
                 return ((T)ads.ReadAny(ads.CreateVariableHandle(name), typeof(T))).ToString();
             }catch(Exception e)
             {
+                errorCnt++;
                 return "";
             }
             
@@ -46,20 +48,24 @@ namespace Beckhoff_VS_Visualisation
                 return Symbol;
             }catch(Exception e)
             {
-                timer1.Enabled = false;
-                MessageBox.Show("Symbol not found:\n" + name);
-                this.Close();
+                errorCnt++;
                 return null;
             }
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            var symbolLoader = TwinCAT.Ads.TypeSystem.SymbolLoaderFactory.Create(ads, TwinCAT.SymbolLoaderSettings.Default);
-            IArrayInstance Symbol = (IArrayInstance)symbolLoader.Symbols[".stTrgsParams"];
-            bool test = false;
-            // stTrgsParams[0].iTriggerDly = GetAdsVariable(".stTrgsParams[0].iTriggerDly");
-            //userControl11.Textbox_1 = stTrgsParams[0].iTriggerDly.ReadValue().ToString();
+            try
+            {
+                var symbolLoader = TwinCAT.Ads.TypeSystem.SymbolLoaderFactory.Create(ads, TwinCAT.SymbolLoaderSettings.Default);
+                IArrayInstance Symbol = (IArrayInstance)symbolLoader.Symbols[".stTrgsParams"];
+                // stTrgsParams[0].iTriggerDly = GetAdsVariable(".stTrgsParams[0].iTriggerDly");
+                //userControl11.Textbox_1 = stTrgsParams[0].iTriggerDly.ReadValue().ToString();
+            }catch
+            {
+                errorCnt++;
+            }
+
         }
 
         public bool CheckConnectionWithLocalPLC()
