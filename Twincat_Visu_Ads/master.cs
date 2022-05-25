@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using TwinCAT.Ads;
+using Twincat_Visu_Ads;
 
 namespace Beckhoff_VS_Visualisation
 {
@@ -16,12 +17,13 @@ namespace Beckhoff_VS_Visualisation
         }
 
         DateTime dt = DateTime.Now;
-        private TcAdsClient ads = new TcAdsClient();
+        private AdsClient ads = new AdsClient();
 
-        public string ErrorsCounterDisplay
+        internal void ErrorsCounterDisplay(int errors)
          {
-            get{ return errorsCounterToolStripMenuItem.Text; }
-            set{ errorsCounterToolStripMenuItem.Text = value; Invalidate(); }
+            errorsCounterToolStripMenuItem.Text = errors.ToString();
+            //get{ return errorsCounterToolStripMenuItem.Text; }
+            //set{ errorsCounterToolStripMenuItem.Text = value; Invalidate(); }
          }
         public void master_OnLoad(object sender, EventArgs e)
         {
@@ -39,6 +41,12 @@ namespace Beckhoff_VS_Visualisation
             TriggersReject FormTR = new TriggersReject();
             FormTR.MdiParent = this;
             FormTR.Show();
+        }
+        private void pLCCONNECTIONSTATUSToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AdsRouter adsRouter = new AdsRouter();
+            adsRouter.MdiParent = this;
+            adsRouter.Show();
         }
 
         private void timer1_Tick(object sender, EventArgs e)

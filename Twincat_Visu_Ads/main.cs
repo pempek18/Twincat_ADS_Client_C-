@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using TwinCAT.Ads;
 using TwinCAT.TypeSystem;
+using TwinCAT.Ads;
 using TCEVENTLOGGERLib;
-
+using TwinCAT;
 
 namespace Beckhoff_VS_Visualisation
 {
@@ -14,6 +14,8 @@ namespace Beckhoff_VS_Visualisation
         //AmsNetId AMS_NetID;
         DateTime dt;
         /*LIST OF PLC VARIABLE USED IN PROJECT*/
+        // compile with: /TwinCAT.Ads
+        
         IValueSymbol prgAlarms_test;
         IValueSymbol bResetCnts;
         IValueSymbol AlarmsCtrl_bAckAllBtn;
@@ -23,7 +25,7 @@ namespace Beckhoff_VS_Visualisation
             InitializeComponent();
             CheckConnectionWithLocalPLC();
         }
-        private TcAdsClient ads = new TcAdsClient();
+        private AdsClient ads = new AdsClient();
         TcEventLog tcEventLogger = new TcEventLog();
         
         int langId = 1033;
@@ -35,11 +37,12 @@ namespace Beckhoff_VS_Visualisation
                 bResetCnts = GetAdsVariable(".bResetCnts");
                 AlarmsCtrl_bAckAllBtn = GetAdsVariable("AlarmsCtrl.bAckAllBtn");
             }
-            catch(Exception error2)
+            catch
             {
                 master myMaster = new master();
                 errorCnt++;
-               myMaster.ErrorsCounterDisplay = errorCnt.ToString();
+                myMaster.ErrorsCounterDisplay(errorCnt);
+                //myMaster.Show();
             }
 
             eventView1.View = View.Details;
@@ -81,9 +84,12 @@ namespace Beckhoff_VS_Visualisation
                 statisticViewier1.Label_5 = GetAdsVariableValueString<UInt32>(".udiRejectsCnt");
                 statisticViewier1.Label_6 = GetAdsVariableValueString<Single>(".rEff7");
             }
-            catch (Exception error1)
+            catch
             {
-                errorCnt++;
+                //master myMaster = new master();
+                //errorCnt++;
+                //myMaster.ErrorsCounterDisplay = errorCnt.ToString();
+                //myMaster.Show();
             }
         }
         private void button1_Click(object sender, EventArgs e)
@@ -145,7 +151,7 @@ namespace Beckhoff_VS_Visualisation
 
         public IValueSymbol GetAdsVariable(string name)
         {
-            ISymbolLoader symbolLoader = TwinCAT.Ads.TypeSystem.SymbolLoaderFactory.Create(ads, TwinCAT.Ads.SymbolLoaderSettings.Default);
+            ISymbolLoader symbolLoader = TwinCAT.Ads.TypeSystem.SymbolLoaderFactory.Create(ads, SymbolLoaderSettings.Default);
             IValueSymbol Symbol = (IValueSymbol)symbolLoader.Symbols[name];
             return Symbol;
         }

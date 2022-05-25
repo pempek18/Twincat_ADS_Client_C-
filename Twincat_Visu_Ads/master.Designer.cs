@@ -37,15 +37,15 @@ namespace Beckhoff_VS_Visualisation
             this.conveyorSetupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pLCCONNECTIONSTATUSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.errorsCounterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip
             // 
             this.menuStrip.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.menuStrip.Font = new System.Drawing.Font("Segoe UI", 16F);
+            this.menuStrip.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.menuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mainToolStripMenuItem,
@@ -96,17 +96,11 @@ namespace Beckhoff_VS_Visualisation
             // 
             // pLCCONNECTIONSTATUSToolStripMenuItem
             // 
-            this.pLCCONNECTIONSTATUSToolStripMenuItem.Enabled = false;
             this.pLCCONNECTIONSTATUSToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.pLCCONNECTIONSTATUSToolStripMenuItem.Name = "pLCCONNECTIONSTATUSToolStripMenuItem";
             this.pLCCONNECTIONSTATUSToolStripMenuItem.Size = new System.Drawing.Size(345, 41);
             this.pLCCONNECTIONSTATUSToolStripMenuItem.Text = "PLC CONNECTION STATUS";
-            // 
-            // timer1
-            // 
-            this.timer1.Enabled = true;
-            this.timer1.Interval = 1000;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.pLCCONNECTIONSTATUSToolStripMenuItem.Click += new System.EventHandler(this.pLCCONNECTIONSTATUSToolStripMenuItem_Click);
             // 
             // errorsCounterToolStripMenuItem
             // 
@@ -115,16 +109,22 @@ namespace Beckhoff_VS_Visualisation
             this.errorsCounterToolStripMenuItem.Size = new System.Drawing.Size(196, 41);
             this.errorsCounterToolStripMenuItem.Text = "errors counter";
             // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // master
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1856, 777);
+            this.ClientSize = new System.Drawing.Size(1856, 971);
             this.ControlBox = false;
             this.Controls.Add(this.menuStrip);
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip;
-            this.Margin = new System.Windows.Forms.Padding(4);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "master";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;

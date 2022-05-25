@@ -13,7 +13,7 @@ namespace Beckhoff_VS_Visualisation
             InitializeComponent();
             CheckConnectionWithLocalPLC();
         }
-        private TcAdsClient ads = new TcAdsClient();
+        private AdsClient ads = new AdsClient();
         int errorCnt=0;
         private struct ST_Trigger_Params
         {
@@ -43,7 +43,7 @@ namespace Beckhoff_VS_Visualisation
         {
             try
             {
-                ISymbolLoader symbolLoader = TwinCAT.Ads.TypeSystem.SymbolLoaderFactory.Create(ads, TwinCAT.Ads.SymbolLoaderSettings.Default);
+                ISymbolLoader symbolLoader = TwinCAT.Ads.TypeSystem.SymbolLoaderFactory.Create(ads, TwinCAT.SymbolLoaderSettings.Default);
                 IValueSymbol Symbol = (IValueSymbol)symbolLoader.Symbols[name];
                 return Symbol;
             }catch(Exception e)
@@ -59,7 +59,7 @@ namespace Beckhoff_VS_Visualisation
             {
                 using (ads)
                 {
-                     ISymbolLoader symbolLoader = TwinCAT.Ads.TypeSystem.SymbolLoaderFactory.Create(ads, TwinCAT.Ads.SymbolLoaderSettings.Default);
+                     ISymbolLoader symbolLoader = TwinCAT.Ads.TypeSystem.SymbolLoaderFactory.Create(ads, TwinCAT.SymbolLoaderSettings.Default);
                     IArrayInstance Symbol = (IArrayInstance)symbolLoader.Symbols[".stTrgsParams"];
                     // stTrgsParams[0].iTriggerDly = GetAdsVariable(".stTrgsParams[0].iTriggerDly");
                     //userControl11.Textbox_1 = stTrgsParams[0].iTriggerDly.ReadValue().ToString();

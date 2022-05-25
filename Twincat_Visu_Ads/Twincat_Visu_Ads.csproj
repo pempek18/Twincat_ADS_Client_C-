@@ -21,9 +21,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="TwinCAT.Ads">
-      <HintPath>..\..\..\..\..\..\TwinCAT\AdsApi\.NET\v4.0.30319\TwinCAT.Ads.dll</HintPath>
-    </Reference>
+    <PackageReference Include="Beckhoff.TwinCAT.Ads" Version="6.0.129" />
+    <PackageReference Include="Beckhoff.TwinCAT.Ads.TcpRouter" Version="6.0.129" />
+    <PackageReference Include="Microsoft.AspNetCore.Components" Version="6.0.5" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0-preview.4.22229.4" />
   </ItemGroup>
 
 </Project>
