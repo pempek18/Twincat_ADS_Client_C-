@@ -1,4 +1,6 @@
 ﻿
+using Twincat_Visu_Ads.Symbols;
+
 namespace Beckhoff_VS_Visualisation
 {
     partial class main
@@ -43,11 +45,11 @@ namespace Beckhoff_VS_Visualisation
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.eventView1 = new System.Windows.Forms.ListView();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.statisticViewier5 = new Beckhoff_VS_Visualisation.StatisticViewier();
-            this.statisticViewier4 = new Beckhoff_VS_Visualisation.StatisticViewier();
-            this.statisticViewier3 = new Beckhoff_VS_Visualisation.StatisticViewier();
-            this.statisticViewier2 = new Beckhoff_VS_Visualisation.StatisticViewier();
-            this.statisticViewier1 = new Beckhoff_VS_Visualisation.StatisticViewier();
+            this.statisticViewier5 = new Twincat_Visu_Ads.Symbols.StatisticViewier();
+            this.statisticViewier4 = new Twincat_Visu_Ads.Symbols.StatisticViewier();
+            this.statisticViewier3 = new Twincat_Visu_Ads.Symbols.StatisticViewier();
+            this.statisticViewier2 = new Twincat_Visu_Ads.Symbols.StatisticViewier();
+            this.statisticViewier1 = new Twincat_Visu_Ads.Symbols.StatisticViewier();
             ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).BeginInit();
             this.SuspendLayout();
             // 

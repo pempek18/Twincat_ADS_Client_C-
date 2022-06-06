@@ -14,6 +14,7 @@ using System.Windows.Forms;
 using TwinCAT.Ads;
 using TwinCAT.Ads.TcpRouter;
 using Microsoft.AspNetCore.Components;
+using System.Xml;
 
 namespace Twincat_Visu_Ads
 {
@@ -23,7 +24,11 @@ namespace Twincat_Visu_Ads
         private CancellationTokenSource _cancel;
         private SynchronizationContext _ctx;
 
-        AmsNetId _local = new AmsNetId("1.2.3.4.5.6");
+        AmsNetId _local = new AmsNetId("172.31.162.113.1.1");
+        static AmsNetId _remoteNetId = new AmsNetId("12.22.10.1.1.1");
+        static IPAddress _remoteIp = IPAddress.Parse("172.31.166.165");
+        static string _remoteRouteName = "STEUBENVR18";
+        private AdsClient ads = new AdsClient();
         public AdsRouter()
         {
             InitializeComponent();
@@ -34,6 +39,13 @@ namespace Twincat_Visu_Ads
             //Debug.Fail("");
             //_cancel = new CancellationTokenSource();
             enableDisableControls();
+        }
+
+        private void AdsRouter_OnLoad()
+        {
+            XmlDocument document = new XmlDocument();
+            //document.LoadXml(StaticRoutes.xml);
+            //comboBox1.Items.AddRange( StaticRoutes.xml);
         }
 
         private void _router_RouterStatusChanged(object sender, RouterStatusChangedEventArgs e)
@@ -47,6 +59,10 @@ namespace Twincat_Visu_Ads
                 enableDisableControls();
             }
             , null);
+        }
+
+        private void AdsConnection()
+        {
         }
 
         private void enableDisableControls()
@@ -90,22 +106,34 @@ namespace Twincat_Visu_Ads
                 }
             }
         }
+        public string GetAdsVariableValueString<T>(string name)
+        {
+            return ((T)ads.ReadAny(ads.CreateVariableHandle(name), typeof(T))).ToString();
+        }
+
 
         private async void btnStart_Click(object sender, EventArgs e)
         {
-            _router = new AmsTcpIpRouter(_local, AmsTcpIpRouter.DEFAULT_TCP_PORT, null, AmsTcpIpRouter.DEFAULT_TCP_PORT, (IPNetwork)null, this);
+            _router = new AmsTcpIpRouter(_local);
+            _router.AddRoute(new Route(_remoteRouteName, _remoteNetId, new IPAddress[] { _remoteIp }));
+            
             _router.RouterStatusChanged += _router_RouterStatusChanged;
             lblStatus.Text = _router.RouterStatus.ToString();
 
             btnStart.Enabled = false;
             btnCancel.Enabled = true;
             _cancel = new CancellationTokenSource();
+
             try
             {
-               await _router.StartAsync(_cancel.Token);
-            }catch
+                ads.Connect(_remoteNetId, 851);
+                string test = GetAdsVariableValueString<Int16>(".NofStns");
+                AppendLoggerList("NofStns : " + test);
+                //await _router.StartAsync(_cancel.Token);
+            }
+            catch (Exception err1)
             {
-                tbNetId.Text = "Connection failed";
+                AppendLoggerList("_router.StartAsync:" + err1);
             }
 
         }
@@ -154,6 +182,11 @@ namespace Twincat_Visu_Ads
         public bool IsEnabled(LogLevel logLevel)
         {
             return true;
+        }
+
+        private void btnStartAds_Click(object sender, EventArgs e)
+        {
+           // using var ads = new AdsClient(loggerFactory.CreateLogger("AdsClient"));
         }
     }
 }

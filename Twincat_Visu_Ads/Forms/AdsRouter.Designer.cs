@@ -37,6 +37,8 @@
             this.btnStop = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
+            this.btnStartAds = new System.Windows.Forms.Button();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label1
@@ -61,9 +63,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(29, 65);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(50, 20);
+            this.label2.Size = new System.Drawing.Size(48, 20);
             this.label2.TabIndex = 2;
-            this.label2.Text = "label2";
+            this.label2.Text = "NetID";
             // 
             // tbNetId
             // 
@@ -78,14 +80,14 @@
             // 
             this.lbLog.FormattingEnabled = true;
             this.lbLog.ItemHeight = 20;
-            this.lbLog.Location = new System.Drawing.Point(29, 143);
+            this.lbLog.Location = new System.Drawing.Point(12, 187);
             this.lbLog.Name = "lbLog";
             this.lbLog.Size = new System.Drawing.Size(759, 304);
             this.lbLog.TabIndex = 4;
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(694, 12);
+            this.btnStart.Location = new System.Drawing.Point(677, 12);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(94, 29);
             this.btnStart.TabIndex = 5;
@@ -95,7 +97,7 @@
             // 
             // btnStop
             // 
-            this.btnStop.Location = new System.Drawing.Point(694, 47);
+            this.btnStop.Location = new System.Drawing.Point(677, 47);
             this.btnStop.Name = "btnStop";
             this.btnStop.Size = new System.Drawing.Size(94, 29);
             this.btnStop.TabIndex = 6;
@@ -105,7 +107,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(694, 82);
+            this.btnCancel.Location = new System.Drawing.Point(677, 82);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(94, 29);
             this.btnCancel.TabIndex = 7;
@@ -115,7 +117,7 @@
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(694, 117);
+            this.btnClear.Location = new System.Drawing.Point(677, 117);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(94, 29);
             this.btnClear.TabIndex = 8;
@@ -123,13 +125,36 @@
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
+            // btnStartAds
+            // 
+            this.btnStartAds.Location = new System.Drawing.Point(677, 152);
+            this.btnStartAds.Name = "btnStartAds";
+            this.btnStartAds.Size = new System.Drawing.Size(94, 29);
+            this.btnStartAds.TabIndex = 9;
+            this.btnStartAds.Text = "Start ADS";
+            this.btnStartAds.UseVisualStyleBackColor = true;
+            this.btnStartAds.Click += new System.EventHandler(this.btnStartAds_Click);
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "Local"});
+            this.comboBox1.Location = new System.Drawing.Point(121, 95);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(540, 28);
+            this.comboBox1.TabIndex = 10;
+            this.comboBox1.Tag = "";
+            // 
             // AdsRouter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(782, 501);
             this.ControlBox = false;
+            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.btnStartAds);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnStop);
@@ -158,5 +183,7 @@
         private Button btnStop;
         private Button btnCancel;
         private Button btnClear;
+        private Button btnStartAds;
+        private ComboBox comboBox1;
     }
 }
