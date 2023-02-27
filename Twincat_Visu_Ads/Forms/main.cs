@@ -5,13 +5,14 @@ using TwinCAT.TypeSystem;
 using TwinCAT.Ads;
 using TCEVENTLOGGERLib;
 using TwinCAT;
+using TwinCAT.Router;
 
 namespace Beckhoff_VS_Visualisation
 {
     public partial class main : Form
     {
         //AmsPort ADS_Port = 851;
-        //AmsNetId AMS_NetID;
+        static AmsNetId _remoteNetId = new AmsNetId("169.254.13.29.1.1");
         DateTime dt;
         /*LIST OF PLC VARIABLE USED IN PROJECT*/
         // compile with: /TwinCAT.Ads
@@ -26,7 +27,7 @@ namespace Beckhoff_VS_Visualisation
             CheckConnectionWithLocalPLC();
         }
         private AdsClient ads = new AdsClient();
-        TcEventLog tcEventLogger = new TcEventLog();
+       // TcEventLog tcEventLogger = new TcEventLog();
         
         int langId = 1033;
         private void Form1_Load(object sender, EventArgs e)
@@ -51,8 +52,8 @@ namespace Beckhoff_VS_Visualisation
             eventView1.Columns.Add("Source", "Source");
             eventView1.Columns.Add("Message", "Message");
 
-            foreach (TcEvent evt in tcEventLogger.EnumLoggedEventsEx())
-                AddEvent(evt);
+            //foreach (TcEvent evt in tcEventLogger.EnumLoggedEventsEx())
+            //    AddEvent(evt);
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -134,7 +135,7 @@ namespace Beckhoff_VS_Visualisation
         {
             try
             {
-                ads.Connect(AmsNetId.Local, 851);
+                ads.Connect(_remoteNetId, 851);
                 return (ads.IsConnected);
             }
             catch (Exception error)

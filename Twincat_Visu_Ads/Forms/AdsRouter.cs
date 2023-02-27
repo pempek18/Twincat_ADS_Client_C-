@@ -24,10 +24,10 @@ namespace Twincat_Visu_Ads
         private CancellationTokenSource _cancel;
         private SynchronizationContext _ctx;
 
-        AmsNetId _local = new AmsNetId("172.31.162.113.1.1");
-        static AmsNetId _remoteNetId = new AmsNetId("12.22.10.1.1.1");
-        static IPAddress _remoteIp = IPAddress.Parse("172.31.166.165");
-        static string _remoteRouteName = "STEUBENVR18";
+        AmsNetId _local = new AmsNetId("192.168.58.1.1.1");
+        static AmsNetId _remoteNetId = new AmsNetId("169.254.13.29.1.1");
+        static IPAddress _remoteIp = IPAddress.Parse("192.168.58.128");
+        static string _remoteRouteName = "VM";
         private AdsClient ads = new AdsClient();
         public AdsRouter()
         {
@@ -124,17 +124,17 @@ namespace Twincat_Visu_Ads
             btnCancel.Enabled = true;
             _cancel = new CancellationTokenSource();
 
-            try
-            {
-                ads.Connect(_remoteNetId, 851);
-                string test = GetAdsVariableValueString<Int16>(".NofStns");
-                AppendLoggerList("NofStns : " + test);
-                //await _router.StartAsync(_cancel.Token);
-            }
-            catch (Exception err1)
-            {
-                AppendLoggerList("_router.StartAsync:" + err1);
-            }
+            //try
+            //{
+            //    ads.Connect(_remoteNetId, 851);
+            //    string test = GetAdsVariableValueString<Int16>(".NofStns");
+            //    AppendLoggerList("NofStns : " + test);
+            //    //await _router.StartAsync(_cancel.Token);
+            //}
+            //catch (Exception err1)
+            //{
+            //    AppendLoggerList("_router.StartAsync:" + err1);
+            //}
 
         }
 

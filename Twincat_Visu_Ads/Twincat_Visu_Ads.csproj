@@ -9,22 +9,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <COMReference Include="TCEVENTLOGGERLib">
-      <WrapperTool>tlbimp</WrapperTool>
-      <VersionMinor>0</VersionMinor>
-      <VersionMajor>1</VersionMajor>
-      <Guid>8754f6d1-6134-11d2-9e29-00e01890498a</Guid>
-      <Lcid>0</Lcid>
-      <Isolated>false</Isolated>
-      <EmbedInteropTypes>true</EmbedInteropTypes>
-    </COMReference>
+    <PackageReference Include="Beckhoff.TwinCAT.Ads" Version="6.0.129" />
+    <PackageReference Include="Beckhoff.TwinCAT.Ads.TcpRouter" Version="6.0.129" />
+    <PackageReference Include="Mbc.Pcs.Net.TwinCat.EventLog" Version="1.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components" Version="6.0.5" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0-preview.4.22229.4" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Beckhoff.TwinCAT.Ads" Version="6.0.129" />
-    <PackageReference Include="Beckhoff.TwinCAT.Ads.TcpRouter" Version="6.0.129" />
-    <PackageReference Include="Microsoft.AspNetCore.Components" Version="6.0.5" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0-preview.4.22229.4" />
+    <Reference Include="Interop.TCEVENTLOGGERLib">
+      <HintPath>..\Interop.TCEVENTLOGGERLib.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
